@@ -6,8 +6,12 @@ export interface HeaderParser {
 
 class DefaultParser implements HeaderParser {
     parse(req: Request, res: Response) {
-      console.log("Hello default parser!")
-      res.status(200).send({greeting: 'hello WHO AM I'})
+      let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      res.status(200).send({
+          ipaddress: ip,
+          language: req.headers["accept-language"],
+          software: req.headers["user-agent"],
+        })
     }
 }
 export { DefaultParser };

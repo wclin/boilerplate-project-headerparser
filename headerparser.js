@@ -5,8 +5,12 @@ var DefaultParser = /** @class */ (function () {
     function DefaultParser() {
     }
     DefaultParser.prototype.parse = function (req, res) {
-        console.log("Hello default parser!");
-        res.status(200).send({ greeting: 'hello WHO AM I' });
+        var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        res.status(200).send({
+            ipaddress: ip,
+            language: req.headers["accept-language"],
+            software: req.headers["user-agent"]
+        });
     };
     return DefaultParser;
 }());
