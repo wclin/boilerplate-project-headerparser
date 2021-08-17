@@ -25,6 +25,10 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// endpoint for request header parser
+var headerParser = require('./headerparser');
+let mainParser = new headerParser.DefaultParser();
+app.get("/api/whoami", mainParser.parse);
 
 
 // listen for requests :)
